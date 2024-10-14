@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../context/UserContext';
 
 const AccountAdmin = () => {
-  // User Information States
+  const { userDetails, isLoggedIn } = useContext(UserContext);
+  
   const [title, setTitle] = useState('');
   const [firstName, setFirstName] = useState('');
   const [surname, setSurname] = useState('');
@@ -10,16 +12,27 @@ const AccountAdmin = () => {
   const [address, setAddress] = useState('');
   const [contact, setContact] = useState('');
   
-  // Contact Preferences States
   const [marketingEmails, setMarketingEmails] = useState(false);
   const [pushNotifications, setPushNotifications] = useState(false);
   const [marketingTexts, setMarketingTexts] = useState(false);
 
-  // Identity Confirmation State
   const [isIdentityConfirmed, setIsIdentityConfirmed] = useState(false);
 
+  // UseEffect to populate the fields with userDetails when logged in
+  useEffect(() => {
+    if (isLoggedIn && userDetails) {
+      setTitle(userDetails.title || '');
+      setFirstName(userDetails.firstName || '');
+      setSurname(userDetails.surname || '');
+      setPreferredName(userDetails.preferredName || '');
+      setDob(userDetails.dob || '');
+      setAddress(userDetails.address || '');
+      setContact(userDetails.contactNumber || '');
+      setIsIdentityConfirmed(userDetails.identityConfirmed || false);
+    }
+  }, [isLoggedIn, userDetails]);
+
   const handleTextChange = (event, setState) => {
-    // Only allows letters and spaces
     const value = event.target.value;
     if (/^[A-Za-z\s]*$/.test(value)) {
       setState(value);
@@ -44,8 +57,12 @@ const AccountAdmin = () => {
       
       <form className="user-details-form">
         <div className="form-group">
-        <label htmlFor="title">Title:</label>
-          <select id="title" value={title} onChange={(e) => setTitle(e.target.value)}>
+          <label htmlFor="title">Title:</label>
+          <select
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          >
             <option value="">Select...</option>
             <option value="Mr">Mr</option>
             <option value="Mrs">Mrs</option>
@@ -169,9 +186,8 @@ const AccountAdmin = () => {
         </div>
 
         <button type="button" onClick={handleUpdatePreferences} style={{ marginTop: '20px' }}>
-        Update Contact Preferences
-      </button>
-      
+          Update Contact Preferences
+        </button>
       </div>
     </div>
   );
