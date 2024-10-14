@@ -1,26 +1,60 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
-const Sidebar = ({ isLoggedIn, handleLogout }) => {
+const Sidebar = () => {
+  const { isLoggedIn, handleLogout } = useContext(UserContext);
+
   return (
     <div className="sidebar">
       <nav>
-        <h4>Main</h4>
-        <Link to="/">Home</Link>
-        <Link to="/dashboard">Dashboard</Link>
-        <Link to="/transactions">Transactions</Link>
-        <Link to="/budget">Budget</Link>
-        <Link to="/goals">Goals</Link>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/transactions">Transactions</Link>
+          </li>
+          <li>
+            <Link to="/budget">Budget</Link>
+          </li>
+          <li>
+            <Link to="/goals">Goals</Link>
+          </li>
+        </ul>
         <hr />
-        <h4>Accounts</h4>
-        <Link to="/current-accounts">Current Accounts</Link>
-        <Link to="/savings-accounts">Savings Accounts</Link>
-        <Link to="/credit-cards">Credit Cards</Link>
+        <p>Accounts</p>
+        <ul>
+          <li>
+            <Link to="/current-accounts">Current Accounts</Link>
+          </li>
+          <li>
+            <Link to="/savings-accounts">Savings Accounts</Link>
+          </li>
+          <li>
+            <Link to="/credit-cards">Credit Cards</Link>
+          </li>
+        </ul>
         <hr />
-        {isLoggedIn && <Link to="/admin">Admin</Link>}
-        <button onClick={isLoggedIn ? handleLogout : () => alert('Login clicked')}>
-          {isLoggedIn ? 'Log Out' : 'Log In'}
-        </button>
+        <ul>
+          {isLoggedIn && (
+            <li>
+              <Link to="/admin">Admin</Link>
+            </li>
+          )}
+          <li>
+            {isLoggedIn ? (
+              <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: '#007bff', cursor: 'pointer', padding: 0 }}>
+                Log Out
+              </button>
+            ) : (
+              <Link to="/login">Log In</Link>
+            )}
+          </li>
+        </ul>
       </nav>
     </div>
   );

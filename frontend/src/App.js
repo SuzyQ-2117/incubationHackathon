@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { UserProvider } from './context/UserContext';
 import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -14,32 +15,28 @@ import CreditCards from './pages/CreditCards';
 import './App.css';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-  };
-
   return (
-    <BrowserRouter>
-      <div className="app-layout">
-        <Sidebar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
-        <main className="content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/transactions" element={<Transactions />} />
-            <Route path="/budget" element={<Budget />} />
-            <Route path="/goals" element={<Goals />} />
-            <Route path="/current-accounts" element={<CurrentAccounts />} />
-            <Route path="/savings-accounts" element={<SavingsAccounts />} />
-            <Route path="/credit-cards" element={<CreditCards />} />
-            {isLoggedIn && <Route path="/admin" element={<AccountAdmin />} />}
-            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-          </Routes>
-        </main>
-      </div>
-    </BrowserRouter>
+    <UserProvider>
+      <Router>
+        <div className="app-layout">
+          <Sidebar />
+          <main className="content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/transactions" element={<Transactions />} />
+              <Route path="/budget" element={<Budget />} />
+              <Route path="/goals" element={<Goals />} />
+              <Route path="/current-accounts" element={<CurrentAccounts />} />
+              <Route path="/savings-accounts" element={<SavingsAccounts />} />
+              <Route path="/credit-cards" element={<CreditCards />} />
+              <Route path="/admin" element={<AccountAdmin />} />
+            </Routes>
+          </main>
+        </div>
+      </Router>
+    </UserProvider>
   );
 }
 
