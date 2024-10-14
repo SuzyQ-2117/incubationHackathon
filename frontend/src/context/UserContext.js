@@ -24,6 +24,7 @@ export const UserProvider = ({ children }) => {
           title: data.title,
           firstName: data.firstName,
           surname: data.surname,
+          preferredName: data.preferredName,
           dob: data.dob,
           address: data.address,
           contactNumber: data.contactNumber,
