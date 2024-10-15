@@ -5,238 +5,272 @@
 }
 
 .app-layout {
-    display: flex;
-  }
-  
-  .sidebar {
-    width: 300px;
-    background-color: #f0f0f0;
-    padding: 20px;
-    height: 100vh;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding-top: 50px;
-  }
-  
-  .sidebar nav {
-    width: 100%; /* Full width for centered alignment */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .sidebar h4 {
-    margin-top: 0;
-    text-align: center; /* Center-align the headings */
-  }
-  
-  .sidebar a {
-    text-decoration: none;
-    color: #333;
-    padding: 5px 0;
-    text-align: center;
-    width: 100%; /* Make links full width to align text */
-  }
-  
-  .sidebar button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    width: 100%; /* Center-align button */
-    text-align: center;
-  }
-  
-  .sidebar hr {
-    width: 100%; /* Make divider full width */
-    margin: 15px 0;
-  }
-  
-  .sidebar a, .sidebar button {
-    list-style: none; /* Remove bullets */
-    border: none;
-    background: none;
-  }
-  
-  .sidebar a:hover, .sidebar button:hover {
-    background-color: #ddd; /* Add a hover effect */
-  }
+  display: flex;
+}
 
-  .sidebar ul {
-    list-style-type: none;
-    list-style: none;
-    padding-left: 0;
-  }
-  
+.sidebar {
+  width: 300px;
+  background-color: #dcdcda;
+  padding: 20px;
+  height: 100vh;
+  /* box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-top: 50px;
+}
 
-  .login-container {
-    width: 300px;
-    margin: 50px auto;
-    text-align: center;
-  }
-  
-  .login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .input-group {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .input-group label {
-    width: 100px;
-    text-align: left;
-    font-weight: bold;
-  }
-  
-  .input-group input {
-    flex: 1;
-    padding: 5px;
-    margin-left: 10px;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .forgot-password {
-    display: block;
-    margin-top: 15px;
-    font-size: 0.9em;
-    color: #007bff;
-    text-decoration: none;
-  }
-  
-  .forgot-password:hover {
-    text-decoration: underline;
-  }
-  
-  .account-admin {
-    width: 400px;
-    margin: 50px auto;
-  }
-  
-  h2, h3 {
-    text-align: center;
-  }
-  
-  .user-details-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .form-group input, .form-group select {
-    padding: 8px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .form-group button {
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
-  
-  .preferences {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .preferences label {
-    margin-left: 8px;
-  }
-  
-  input[type="checkbox"] {
-    margin-right: 5px;
-  }
+.sidebar nav {
+  width: 100%;
+  /* Full width for centered alignment */
+  display: flex;
+  flex-direction: column;
+}
 
-  .welcome-container {
-    width: 33%;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    color: #333;
-    font-size: 1.2em;
-    font-weight: bold;
-  }
-  
-  /* Optional: Adjust the alignment */
-  .welcome-container h3 {
-    margin: 0;
-  }
-  
+.sidebar h4 {
+  margin-top: 0;
+  text-align: center;
+  /* Center-align the headings */
+}
 
-  .intro-container {  display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-auto-columns: 1fr;
-    gap: 10px 10px;
-    grid-auto-flow: row;
-    justify-items: stretch;
-    align-items: stretch;
-    grid-template-areas:
-      "welcome-widget calendar-widget pieChart-widget"
-      "totalSpend-widget savings-widget transactions-widget"
-      "topCategories-widget creditCard-widget transactions-widget";
-  }
-  
-  .welcome-widget { grid-area: welcome-widget; }
-  
-  .calendar-widget { grid-area: calendar-widget; }
-  
-  .pieChart-widget { grid-area: pieChart-widget; }
-  
-  .transactions-widget { grid-area: transactions-widget; }
-  
-  .savings-widget { grid-area: savings-widget; }
-  
-  .totalSpend-widget { grid-area: totalSpend-widget; }
-  
-  .topCategories-widget { grid-area: topCategories-widget; }
-  
-  .creditCard-widget { grid-area: creditCard-widget; }
-  
+.sidebar a {
+  text-decoration: none;
+  color: #333;
+  padding: 5px 0;
+  text-align: center;
+  width: 100%;
+  /* Make links full width to align text */
+}
+
+.sidebar button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  width: 100%;
+  /* Center-align button */
+  text-align: center;
+}
+
+.sidebar hr {
+  width: 100%;
+  /* Make divider full width */
+  margin: 15px 0;
+}
+
+.sidebar a,
+.sidebar button {
+  list-style: none;
+  /* Remove bullets */
+  border: none;
+  background: none;
+}
+
+.sidebar a:hover,
+.sidebar button:hover {
+  background-color: #ddd;
+  /* Add a hover effect */
+}
+
+.sidebar ul {
+  list-style-type: none;
+  list-style: none;
+  padding-left: 0;
+}
+
+
+.login-container {
+  width: 300px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.input-group label {
+  width: 100px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 10px;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.forgot-password {
+  display: block;
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+}
+
+.account-admin {
+  width: 400px;
+  margin: 50px auto;
+}
+
+h2,
+h3 {
+  text-align: center;
+}
+
+.user-details-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 8px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-group button {
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.preferences {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.preferences label {
+  margin-left: 8px;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.welcome-container {
+  width: 33%;
+  padding: 20px;
+  margin: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: #333;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Optional: Adjust the alignment */
+.welcome-container h3 {
+  margin: 0;
+}
+
+
+.dashboard-container {
+  background-color: #f5f5f4;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  gap: 10px 10px;
+  grid-auto-flow: row;
+  justify-items: stretch;
+  align-items: stretch;
+  grid-template-areas:
+    "welcome-widget calendar-widget pieChart-widget"
+    "totalSpend-widget savings-widget transactions-widget"
+    "topCategories-widget creditCard-widget transactions-widget";
+}
+
+.widget {
+  background-color: white;
+  border-radius: 10px;
+  gap: 10px; 
+}
+
+.welcome-widget {
+  grid-area: welcome-widget;
+}
+
+.calendar-widget {
+  grid-area: calendar-widget;
+}
+
+.pieChart-widget {
+  grid-area: pieChart-widget;
+}
+
+.transactions-widget {
+  grid-area: transactions-widget;
+}
+
+.savings-widget {
+  grid-area: savings-widget;
+}
+
+.totalSpend-widget {
+  grid-area: totalSpend-widget;
+}
+
+.topCategories-widget {
+  grid-area: topCategories-widget;
+}
+
+.creditCard-widget {
+  grid-area: creditCard-widget;
+}

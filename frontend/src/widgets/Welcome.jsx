@@ -25,12 +25,12 @@ export default function Welcome() {
   }, [])
 
   return (
-    <div className="welcome-container">
+    <>
       {isLoggedIn ? (
         <h3>{greeting}, {preferredName}!</h3>
       ) : (
         <h3>{greeting}!</h3>
       )}
-    </div>
+    </>
   );
 }

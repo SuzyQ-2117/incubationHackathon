@@ -1,0 +1,31 @@
+[
+    {
+      "transactionId": "1",
+      "timestamp": "2024-09-15T10:30:00Z",
+      "merchantCode": 123,
+      "transactionType": "DEB",
+      "amount": 100
+    },
+    {
+      "transactionId": "2",
+      "timestamp": "2024-10-01T14:20:00Z",
+      "merchantCode": 124,
+      "transactionType": "DD",
+      "amount": 50
+    },
+    {
+      "transactionId": "3",
+      "timestamp": "2024-10-08T09:45:00Z",
+      "merchantCode": 123,
+      "transactionType": "FPI",
+      "amount": 75
+    },
+    {
+      "transactionId": "4",
+      "timestamp": "2024-10-10T12:15:00Z",
+      "merchantCode": 125,
+      "transactionType": "DEB",
+      "amount": 200
+    }
+  ]
+  
