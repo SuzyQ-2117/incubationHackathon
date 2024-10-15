@@ -13,6 +13,7 @@ import CurrentAccounts from './pages/CurrentAccounts';
 import SavingsAccounts from './pages/SavingsAccounts';
 import CreditCards from './pages/CreditCards';
 import './App.css';
+import RegistrationsPage from './pages/RegistrationPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<RegistrationsPage />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/budget" element={<Budget />} />

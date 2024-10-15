@@ -1,52 +1,65 @@
-import React, { useContext, useState } from 'react';
-import { Navigate } from 'react-router-dom';
-import { UserContext } from '../context/UserContext';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate instead of useHistory
+import axios from "axios";
 
 const Login = () => {
-  const { isLoggedIn, handleLogin } = useContext(UserContext);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate(); // useNavigate instead of useHistory
 
-  const handleLoginSubmit = () => {
-    handleLogin(username, password);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8088/login", {
+        username,
+        password,
+      });
+      console.log("Login successful:", response.data);
+      alert("Logged in successfully!");
+      navigate("/home"); // Navigate to /home after login
+    } catch (error) {
+      console.error("Error logging in:", error);
+      alert("Invalid credentials. Please try again.");
+    }
   };
 
-  // Redirect to dashboard if the user is authenticated
-  if (isLoggedIn) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  const navigateToRegistration = () => {
+    navigate("/register");
+  };
 
   return (
-    <div className="login-container">
+    <div>
       <h2>Login</h2>
-      <form onSubmit={(e) => e.preventDefault()} className="login-form">
-        <div className="input-group">
-          <label htmlFor="username">Username:</label>
+      <form onSubmit={handleLogin}>
+        <label>
+          Username:
           <input
             type="text"
-            id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
           />
-        </div>
-        
-        <div className="input-group">
-          <label htmlFor="password">Password:</label>
+        </label>
+        <br />
+
+        <label>
+          Password:
           <input
             type="password"
-            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
-        </div>
-        
-        <div className="button-group">
-          <button type="button" onClick={handleLoginSubmit}>
-            Login
-          </button>
-        </div>
+        </label>
+        <br />
+
+        <button type="submit">Login</button>
       </form>
-      <a href="#" className="forgot-password">Forgotten Password?</a>
+
+      <div style={{ marginTop: "20px" }}>
+        <p>Not registered? Click below to sign up!</p>
+        <button onClick={navigateToRegistration}>Sign Up</button>
+      </div>
     </div>
   );
 };
