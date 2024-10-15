@@ -25,9 +25,14 @@ public class Transaction {
     @Column(nullable = false)
     private float amount;
 
+    @ManyToOne
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
+
     public Transaction() {}
 
     // Getters and Setters
+
     public Long getTransactionId() {
         return transactionId;
     }
@@ -74,5 +79,13 @@ public class Transaction {
 
     public void setAmount(float amount) {
         this.amount = amount;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
