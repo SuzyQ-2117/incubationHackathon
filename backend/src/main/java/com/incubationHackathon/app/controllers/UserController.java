@@ -29,6 +29,27 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    // Verify login credentials
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> verifyUserCredentials(@RequestParam String username, @RequestParam String password) {
+        boolean isValid = userService.verifyUserCredentials(username, password);
+        return ResponseEntity.ok(isValid);
+    }
+
+    // Update user details
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDTO> updateUserDetails(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        UserDTO updatedUser = userService.updateUserDetails(id, userDTO);
+        return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+    }
+
+    // Confirm identity
+    @PatchMapping("/{id}/confirm-identity")
+    public ResponseEntity<Void> confirmUserIdentity(@PathVariable Long id) {
+        userService.confirmUserIdentity(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     // Delete a user by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
@@ -36,10 +57,5 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // Verify login credentials
-    @PostMapping("/login")
-    public ResponseEntity<Boolean> verifyUserCredentials(@RequestParam String username, @RequestParam String password) {
-        boolean isValid = userService.verifyUserCredentials(username, password);
-        return ResponseEntity.ok(isValid);
-    }
+
 }

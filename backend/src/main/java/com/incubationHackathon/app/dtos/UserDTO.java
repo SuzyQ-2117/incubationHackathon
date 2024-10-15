@@ -1,5 +1,7 @@
 package com.incubationHackathon.app.dtos;
 
+import com.incubationHackathon.app.entities.User;
+
 import java.time.LocalDate;
 
 public class UserDTO {
@@ -38,6 +40,22 @@ public class UserDTO {
         this.marketingEmail = marketingEmail;
         this.pushNotifications = pushNotifications;
         this.marketingText = marketingText;
+    }
+
+    public UserDTO(User user) {
+        this.userId = user.getUserId();
+        this.title = user.getTitle();
+        this.firstName = user.getFirstName();
+        this.surname = user.getSurname();
+        this.preferredName = user.getPreferredName();
+        this.dob = user.getDob();
+        this.address = user.getAddress();
+        this.contactNumber = user.getContactNumber();
+        this.identityConfirmed = user.getIdentityConfirmed();
+        this.username = user.getUsername();
+        this.marketingEmail = user.getMarketingEmail();
+        this.pushNotifications = user.getPushNotifications();
+        this.marketingText = user.getMarketingText();
     }
 
     // Getters and Setters
