@@ -1,0 +1,91 @@
+package com.incubationHackathon.transactions.entity;
+
+import jakarta.persistence.Entity;
+
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class Transaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long transactionId;
+
+    @Column(nullable = false)
+    private String transactionType;
+
+    @Column(nullable = false)
+    private LocalDateTime timestamp;
+
+    @Column(nullable = false)
+    private int merchantCode;
+
+    private String userCategory;
+
+    @Column(nullable = false)
+    private float amount;
+
+    @Column(nullable = false)
+    private String productCode; // Reference to Account without direct JPA mapping
+
+    public Transaction() {}
+
+    // Getters and Setters
+
+    public Long getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(Long transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public int getMerchantCode() {
+        return merchantCode;
+    }
+
+    public void setMerchantCode(int merchantCode) {
+        this.merchantCode = merchantCode;
+    }
+
+    public String getUserCategory() {
+        return userCategory;
+    }
+
+    public void setUserCategory(String userCategory) {
+        this.userCategory = userCategory;
+    }
+
+    public float getAmount() {
+        return amount;
+    }
+
+    public void setAmount(float amount) {
+        this.amount = amount;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+}
