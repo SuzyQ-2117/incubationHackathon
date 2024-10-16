@@ -50,7 +50,6 @@ public class AccountService {
 
     private AccountDTO convertToDTO(Account account) {
         return new AccountDTO(
-                account.getAccountId(),
                 account.getSortCode(),
                 account.getAccountNumber(),
                 account.getProductCode(),

@@ -8,12 +8,11 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
+    @Column(nullable = false, unique = true)
+    private String productCode;
 
     private String sortCode;
     private String accountNumber;
-    private String productCode;
 
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
@@ -21,7 +20,7 @@ public class Account {
     private double balance;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "username", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -37,12 +36,12 @@ public class Account {
 
     public Account() {}
 
-    public Long getAccountId() {
-        return accountId;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    public void setProductCode(String s) {
+        this.productCode = this.sortCode + this.accountNumber;
     }
 
     public String getSortCode() {
@@ -59,14 +58,6 @@ public class Account {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
-    }
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
     }
 
     public AccountType getAccountType() {

@@ -13,12 +13,14 @@ const UserRegistrationForm = () => {
     contactNumber: "",
     username: "",
     password: "",
+    confirmPassword: "",
     identityConfirmed: false,
     marketingEmail: false,
     pushNotifications: false,
     marketingText: false,
   });
 
+  const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -31,6 +33,13 @@ const UserRegistrationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setPasswordError("Passwords do not match.");
+      return;
+    }
+
+    setPasswordError(""); // Clear any previous password error
+
     try {
       const response = await axios.post("http://localhost:8088/users", formData);
       console.log("User registered successfully:", response.data);
@@ -45,6 +54,7 @@ const UserRegistrationForm = () => {
         contactNumber: "",
         username: "",
         password: "",
+        confirmPassword: "",
         identityConfirmed: false,
         marketingEmail: false,
         pushNotifications: false,
@@ -176,6 +186,19 @@ const UserRegistrationForm = () => {
         />
       </label>
       <br />
+
+      <label>
+        Confirm Password:
+        <input
+          type="password"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+        />
+      </label>
+      <br />
+      {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
 
       <label>
         Marketing Email:

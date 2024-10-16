@@ -42,6 +42,7 @@ public class UserDTO {
         this.marketingText = marketingText;
     }
 
+    // Constructor that maps a User entity to UserDTO
     public UserDTO(User user) {
         this.userId = user.getUserId();
         this.title = user.getTitle();

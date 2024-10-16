@@ -26,7 +26,7 @@ public class Transaction {
     private float amount;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "product_code", nullable = false)
     private Account account;
 
     public Transaction() {}

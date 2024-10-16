@@ -21,6 +21,9 @@ public class AccountDTO {
         this.balance = balance;
     }
 
+    public AccountDTO(String sortCode, String accountNumber, String productCode, String string, double balance) {
+    }
+
     public Long getAccountId() {
         return accountId;
     }
