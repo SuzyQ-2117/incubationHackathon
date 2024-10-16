@@ -1,25 +1,50 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate instead of useHistory
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // useNavigate instead of useHistory
+  const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post("http://localhost:8088/login", {
-        username,
-        password,
+      // Step 1: Get the CSRF token
+      const csrfResponse = await axios.get("http://localhost:8088/csrf", {
+        withCredentials: true, // Important to send cookies along
       });
-      console.log("Login successful:", response.data);
-      alert("Logged in successfully!");
-      navigate("/home"); // Navigate to /home after login
+      
+      const csrfToken = csrfResponse.data.token || csrfResponse.headers['x-csrf-token']; // Get the token from response data or headers, depending on your setup
+
+      // Step 2: Send the login request with the CSRF token
+      const response = await axios.post(
+        "http://localhost:8088/users/login",
+        new URLSearchParams({
+          username,
+          password,
+          "remember-me": rememberMe,
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRF-TOKEN": csrfToken, // Include the CSRF token here
+          },
+          withCredentials: true,
+        }
+      );
+
+      // Check for success status in the response
+      if (response.status === 200) {
+        console.log("Login successful:", response.data);
+        alert("Logged in successfully!");
+        navigate("/home"); // Navigate to /home after login
+      }
     } catch (error) {
       console.error("Error logging in:", error);
-      alert("Invalid credentials. Please try again.");
+      alert("Invalid credentials or CSRF token issue. Please try again.");
     }
   };
 
@@ -50,6 +75,16 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+        </label>
+        <br />
+
+        <label>
+          <input
+            type="checkbox"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
+          Remember me?
         </label>
         <br />
 
