@@ -24,7 +24,7 @@ function App() {
           <main className="content">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/users/login" element={<Login />} />
               <Route path="/register" element={<RegistrationsPage />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />
