@@ -1,5 +1,7 @@
 package com.incubationHackathon.app.dtos;
 
+import com.incubationHackathon.app.entities.Account;
+
 public class AccountDTO {
 
     private Long accountId;
@@ -22,6 +24,9 @@ public class AccountDTO {
     }
 
     public AccountDTO(String sortCode, String accountNumber, String productCode, String string, double balance) {
+    }
+
+    public AccountDTO(long l, String account1, Account.AccountType accountType) {
     }
 
     public Long getAccountId() {
