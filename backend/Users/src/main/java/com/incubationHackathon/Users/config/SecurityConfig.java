@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/*").permitAll()  // Allow register endpoint without authentication
+                .requestMatchers("/users", "/users/*", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()  // Allow register endpoint without authentication
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable();

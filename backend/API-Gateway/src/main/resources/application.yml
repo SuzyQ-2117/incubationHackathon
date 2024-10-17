@@ -15,11 +15,11 @@ spring:
           uri: lb://ACCOUNTS
           predicates:
             - Path=/accounts/**
-          filters:
-            - StripPrefix=1
+#          filters:
+#            - StripPrefix=1
         - id: transactions-service
           uri: lb://TRANSACTIONS
           predicates:
             - Path=/transactions/**
-          filters:
-            - StripPrefix=1
+#          filters:
+#            - StripPrefix=1
