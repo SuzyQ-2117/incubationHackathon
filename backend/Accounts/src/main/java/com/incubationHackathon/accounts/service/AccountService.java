@@ -49,12 +49,17 @@ public class AccountService {
     }
 
 
-    public void deleteAccount(Long accountId) {
-        if (!accountRepository.existsById(accountId)) {
-            throw new RuntimeException("Account not found");
+    public void deleteAccountByProductCode(String productCode, Long userId) {
+        Optional<Account> existingAccount = getAccountByProductCode(productCode, userId);
+
+        if (existingAccount.isPresent()) {
+            accountRepository.delete(existingAccount.get());
+        } else {
+            throw new RuntimeException("Account not found for the given product code and user");
         }
-        accountRepository.deleteById(accountId);
     }
+
+
 
     public List<AccountDTO> getAccountsByType(Account.AccountType accountType) {
         return accountRepository.findByAccountType(accountType)

@@ -95,19 +95,24 @@ public class AccountController {
 
 
 
-    // Delete an account for the logged-in user
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAccount(@PathVariable Long id, HttpServletRequest request) {
+    // Delete an account for the logged-in user by productCode
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteAccountByProductCode(
+            @RequestBody Map<String, String> requestBody, HttpServletRequest request) {
         String token = request.getHeader("Authorization").replace("Bearer ", "");
         Long userId = getUserIdFromToken(token);
+        String productCode = requestBody.get("productCode");
 
-        if (userId == null || !accountService.isAccountOwnedByUser(id, userId)) {
-            return ResponseEntity.status(403).build();
+        if (userId == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        accountService.deleteAccount(id);
+        // Delete the account
+        accountService.deleteAccountByProductCode(productCode, userId);
         return ResponseEntity.noContent().build();
     }
+
+
 
     // Remaining methods without JWT verification
 

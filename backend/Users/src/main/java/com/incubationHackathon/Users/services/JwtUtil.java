@@ -23,6 +23,25 @@ public class JwtUtil {
                 .compact();
     }
 
+    public String generateExpiredToken(String token) {
+        Claims claims = extractAllClaims(token);
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(claims.getSubject())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()))  // Expired immediately
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET_KEY)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+
 
     public Boolean validateToken(String token, String username) {
         final String tokenUsername = extractUsername(token);

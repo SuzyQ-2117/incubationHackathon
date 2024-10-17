@@ -6,6 +6,7 @@ import com.incubationHackathon.Users.entities.User;
 import com.incubationHackathon.Users.services.JwtUtil;
 import com.incubationHackathon.Users.services.UserService;
 import com.incubationHackathon.users.dto.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -81,6 +82,14 @@ public class UserController {
         }
     }
 
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").replace("Bearer ", "");
+        String expiredToken = jwtUtil.generateExpiredToken(token);
+
+        return ResponseEntity.ok("Token has been expired. Please remove the token from storage.");
+    }
 
 
 
