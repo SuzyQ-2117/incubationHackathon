@@ -15,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -33,6 +34,32 @@ public class UserController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserController(AuthenticationManager authenticationManager,
+                          UserDetailsService userDetailsService,
+                          PasswordEncoder passwordEncoder) {
+        this.authenticationManager = authenticationManager;
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+        );
+
+        if (authentication.isAuthenticated()) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+        }
+    }
+
+
 
     // Add a new user
     @PostMapping

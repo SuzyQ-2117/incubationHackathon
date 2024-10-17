@@ -38,9 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/users/login", "/users/register").permitAll()  // Allow register endpoint without authentication
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/users/login")  // Enable form-based login at the default /login endpoint
-                .defaultSuccessUrl("http://localhost:3000/dashboard", true);
-
+                .formLogin().disable();
         return http.build();
     }
 

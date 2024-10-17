@@ -1,16 +1,25 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+
   cloud:
     gateway:
       routes:
-        - id: accounts-service
-          uri: lb://accounts
-          predicates:
-            - Path=/accounts/**
         - id: users-service
-          uri: lb://users
+          uri: http://localhost:8082
           predicates:
             - Path=/users/**
+          filters:
+            - StripPrefix=1
+        - id: accounts-service
+          uri: lb://ACCOUNTS
+          predicates:
+            - Path=/accounts/**
+          filters:
+            - StripPrefix=1
         - id: transactions-service
-          uri: lb://transactions
+          uri: lb://TRANSACTIONS
           predicates:
             - Path=/transactions/**
+          filters:
+            - StripPrefix=1
