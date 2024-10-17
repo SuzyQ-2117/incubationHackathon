@@ -29,7 +29,7 @@ public class Account {
     public enum AccountType {
         CURRENT,
         SAVINGS,
-        CREDIT_CARD
+        CHECKING, CREDIT_CARD
     }
 
     // Constructors, Getters, and Setters
