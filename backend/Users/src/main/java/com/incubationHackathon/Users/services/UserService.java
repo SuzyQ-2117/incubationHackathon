@@ -34,6 +34,13 @@ public class UserService implements UserDetailsService {
         return convertToDTO(user);
     }
 
+    public Long getUserIdByUsername(String username) {
+        // Assuming User entity has a getId() method and username is unique
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return user.getUserId();
+    }
+
     public UserDTO updateUserDetails(Long id, UserDTO userDTO) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));

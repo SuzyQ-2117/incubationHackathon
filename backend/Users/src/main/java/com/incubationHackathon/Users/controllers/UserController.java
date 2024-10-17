@@ -51,6 +51,20 @@ public class UserController {
         return ResponseEntity.ok("Service is up");
     }
 
+    // THIS WORKS BUT DOES NOT RETURN A JWT
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody AuthRequest loginRequest) {
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
+//        );
+//
+//        if (authentication.isAuthenticated()) {
+//            return ResponseEntity.ok("Login successful");
+//        } else {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
+//        }
+//    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
@@ -58,11 +72,16 @@ public class UserController {
         );
 
         if (authentication.isAuthenticated()) {
-            return ResponseEntity.ok("Login successful");
+            // Assuming you have a method to get userId based on the username
+            Long userId = userService.getUserIdByUsername(loginRequest.getUsername());
+            String jwt = jwtUtil.generateToken(userId);
+            return ResponseEntity.ok(new AuthResponse(jwt));  // Assuming you have an AuthResponse class with a "token" field
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
         }
     }
+
+
 
 
 

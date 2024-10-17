@@ -29,12 +29,6 @@ public class AccountService {
     public AccountDTO getAccountById(Long accountId) {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new RuntimeException("Account not found"));
-
-        // If transactions are needed, make a call to Transaction-Service using RestTemplate
-        // Example:
-        // String url = "http://TRANSACTION-SERVICE/transactions/account/" + accountId;
-        // List<TransactionDTO> transactions = restTemplate.getForObject(url, List.class);
-
         return convertToDTO(account);
     }
 
@@ -56,6 +50,21 @@ public class AccountService {
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+
+    // Retrieve all accounts by user ID
+    public List<AccountDTO> getAccountsByUserId(Long userId) {
+        return accountRepository.findByUserId(userId)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Check if an account is owned by a specific user
+    public boolean isAccountOwnedByUser(Long accountId, Long userId) {
+        return accountRepository.findById(accountId)
+                .map(account -> account.getUserId().equals(userId))
+                .orElse(false);
     }
 
     private AccountDTO convertToDTO(Account account) {

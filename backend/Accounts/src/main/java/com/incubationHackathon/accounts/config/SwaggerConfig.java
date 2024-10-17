@@ -1,2 +1,18 @@
-package com.incubationHackathon.accounts.config;public class SwaggerConfig {
+package com.incubationHackathon.accounts.config;
+
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.OpenAPI;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Account Service API")
+                        .description("Documentation for the Account Service")
+                        .version("1.0"));
+    }
 }
