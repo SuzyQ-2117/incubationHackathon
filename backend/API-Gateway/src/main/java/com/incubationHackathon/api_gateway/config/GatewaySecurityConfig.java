@@ -2,25 +2,22 @@ package com.incubationHackathon.api_gateway.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class GatewaySecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
         http
-                .csrf().disable() // Disable CSRF as required
-                .authorizeHttpRequests()
-                .requestMatchers("/users/**", "/accounts/**", "/transactions/**").permitAll() // Public access to all endpoints
-                .anyRequest().authenticated()
+                .csrf().disable()
+                .authorizeExchange()
+                .pathMatchers("/users/login", "/users/status").permitAll() // Allow login and status without authentication
+                .anyExchange().permitAll() // Ensure all other endpoints are also allowed
                 .and()
-                .formLogin().disable() // Disable form login if using JWT-based or other auth methods
-                .httpBasic().disable(); // Optionally disable basic auth if not required
-
+                .httpBasic().disable()
+                .formLogin().disable();
         return http.build();
     }
 }

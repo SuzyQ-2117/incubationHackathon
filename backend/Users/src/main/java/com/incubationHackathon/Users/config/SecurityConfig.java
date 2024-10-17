@@ -35,7 +35,7 @@ public class SecurityConfig {
                 .csrf().disable()
                 .cors().and()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/login", "/users/register").permitAll()  // Allow register endpoint without authentication
+                .requestMatchers("/users/*").permitAll()  // Allow register endpoint without authentication
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable();

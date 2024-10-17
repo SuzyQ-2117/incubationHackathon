@@ -46,6 +46,11 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @GetMapping("/status")
+    public ResponseEntity<?> status() {
+        return ResponseEntity.ok("Service is up");
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
