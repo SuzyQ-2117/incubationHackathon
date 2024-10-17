@@ -12,8 +12,7 @@ public class AccountDTO {
     // Constructors, Getters, and Setters
     public AccountDTO() {}
 
-    public AccountDTO(Long accountId, String sortCode, String accountNumber, String productCode, String accountType, double balance, Long userId) {
-
+    public AccountDTO(String sortCode, String accountNumber, String productCode, String accountType, double balance, Long userId) {
         this.sortCode = sortCode;
         this.accountNumber = accountNumber;
         this.productCode = productCode;
@@ -22,8 +21,6 @@ public class AccountDTO {
         this.userId = userId;
     }
 
-    public AccountDTO(String sortCode, String accountNumber, String productCode, String string, double balance, Long userId) {
-    }
 
     public String getSortCode() {
         return sortCode;
