@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,17 +27,27 @@ public class AccountService {
                 .collect(Collectors.toList());
     }
 
-    public AccountDTO getAccountById(Long accountId) {
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new RuntimeException("Account not found"));
-        return convertToDTO(account);
-    }
-
     public AccountDTO addAccount(Account account) {
-        account.setProductCode(account.getSortCode() + account.getAccountNumber());
+        System.out.println("Checking account: " + account.getProductCode());
+
+        // Check if an account with the same productCode already exists for the user
+        Optional<Account> existingAccount = getAccountByProductCode(account.getProductCode(), account.getUserId());
+
+        if (existingAccount.isPresent()) {
+            System.out.println("Account already exists for user ID: " + account.getUserId() + " with product code: " + account.getProductCode());
+            throw new RuntimeException("Account already exists for this user");
+        }
+
+        // Save the account as it does not exist for this user
         Account savedAccount = accountRepository.save(account);
         return convertToDTO(savedAccount);
     }
+
+    public Optional<Account> getAccountByProductCode(String productCode, Long userId) {
+        return accountRepository.findByProductCode(productCode)
+                .filter(account -> account.getUserId().equals(userId));
+    }
+
 
     public void deleteAccount(Long accountId) {
         if (!accountRepository.existsById(accountId)) {
