@@ -1,63 +1,74 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
+// Create the context
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userDetails, setUserDetails] = useState(null);
-  const [preferences, setPreferences] = useState({
-    marketingEmails: false,
-    pushNotifications: false,
-    marketingTexts: false,
-  });
+  const [jwt, setJwt] = useState(null); // Stores the JWT token
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // Tracks the user's login state
+  const [userDetails, setUserDetails] = useState(null); // Stores any user-specific info if needed
 
+  // On first render (or page refresh), check if a token exists in localStorage and set the user as authenticated
+  useEffect(() => {
+    const storedJwt = localStorage.getItem('jwt');
+    if (storedJwt) {
+      setJwt(storedJwt);
+      setIsAuthenticated(true);
+    }
+  }, []); // Empty dependency array ensures this runs only once when the component mounts (on page load/refresh)
+
+  // Login function
   const handleLogin = async (username, password) => {
     try {
-      // Fetch the JSON data
-      const response = await fetch('/data/userData.json');
-      const data = await response.json();
+      const response = await fetch('/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-      // Check if username and password match
-      if (data.username === username && data.password === password) {
-        setIsLoggedIn(true);
-        setUserDetails({
-          title: data.title,
-          firstName: data.firstName,
-          surname: data.surname,
-          preferredName: data.preferredName,
-          dob: data.dob,
-          address: data.address,
-          contactNumber: data.contactNumber,
-          identityConfirmed: data.identityConfirmed,
-          listOfAccounts: data.listOfAccounts,
-        });
+      if (response.ok) {
+        const data = await response.json();
+        const { token } = data; // Assuming the API returns a token
+
+        // Save the token to localStorage
+        localStorage.setItem('jwt', token);
+        setJwt(token);
+        setIsAuthenticated(true);
+
         alert('Login successful!');
       } else {
         alert('Invalid username or password.');
       }
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error('Error logging in:', error);
+      alert('An error occurred while logging in.');
     }
   };
 
+  // Logout function
   const handleLogout = () => {
-    setIsLoggedIn(false);
-    setUserDetails(null);
+    // Remove the token from localStorage and update state
+    localStorage.removeItem('jwt');
+    setJwt(null);
+    setIsAuthenticated(false);
+    setUserDetails(null); // Clear user details if you were storing them
   };
 
-  const updatePreferences = (prefs) => {
-    setPreferences((prev) => ({ ...prev, ...prefs }));
-  };
+  // Function to check if user is authenticated
+  const checkAuth = () => !!jwt;
 
   return (
     <UserContext.Provider
       value={{
-        isLoggedIn,
-        userDetails,
-        preferences,
+        isAuthenticated,
+        jwt,
         handleLogin,
         handleLogout,
-        updatePreferences,
+        checkAuth,
+        userDetails,
+        setUserDetails, // Allows you to set user details after login
       }}
     >
       {children}

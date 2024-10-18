@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 
 const Sidebar = () => {
-  const { isLoggedIn, handleLogout } = useContext(UserContext);
+  const { isAuthenticated, handleLogout } = useContext(UserContext);
 
   return (
     <div className="sidebar">
@@ -12,42 +12,45 @@ const Sidebar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/transactions">Transactions</Link>
-          </li>
-          <li>
-            <Link to="/budget">Budget</Link>
-          </li>
-          <li>
-            <Link to="/goals">Goals</Link>
-          </li>
-        </ul>
-        <hr />
-        <p>Accounts</p>
-        <ul>
-          <li>
-            <Link to="/current-accounts">Current Accounts</Link>
-          </li>
-          <li>
-            <Link to="/savings-accounts">Savings Accounts</Link>
-          </li>
-          <li>
-            <Link to="/credit-cards">Credit Cards</Link>
-          </li>
-        </ul>
-        <hr />
-        <ul>
-          {isLoggedIn && (
-            <li>
-              <Link to="/admin">Admin</Link>
-            </li>
+          {/* If logged in, show these options */}
+          {isAuthenticated && (
+            <>
+              <li>
+                <Link to="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/transactions">Transactions</Link>
+              </li>
+              <li>
+                <Link to="/budget">Budget</Link>
+              </li>
+              <li>
+                <Link to="/goals">Goals</Link>
+              </li>
+              <li>
+                <Link to="/accounts">Accounts</Link>
+              </li>
+              <li>
+                <Link to="/admin">Account Admin</Link>
+              </li>
+            </>
           )}
+        </ul>
+        <hr />
+        <ul>
           <li>
-            {isLoggedIn ? (
-              <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: '#007bff', cursor: 'pointer', padding: 0 }}>
+            {/* If logged in, show Log Out button; if not, show Log In & Register */}
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#007bff',
+                  cursor: 'pointer',
+                  padding: 0,
+                }}
+              >
                 Log Out
               </button>
             ) : (

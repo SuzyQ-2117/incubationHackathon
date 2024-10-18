@@ -9,17 +9,12 @@ spring:
           uri: lb://USERS
           predicates:
             - Path=/users/**
-#          filters:
-#            - StripPrefix=1
         - id: accounts-service
           uri: lb://ACCOUNTS
           predicates:
             - Path=/accounts/**
-#          filters:
-#            - StripPrefix=1
+
         - id: transactions-service
           uri: lb://TRANSACTIONS
           predicates:
             - Path=/transactions/**
-#          filters:
-#            - StripPrefix=1
