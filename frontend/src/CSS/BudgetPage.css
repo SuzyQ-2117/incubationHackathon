@@ -1,0 +1,30 @@
+.budget-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .budget-input {
+    font-size: 1.2rem;
+  }
+  
+  .budget-chart {
+    margin: 30px auto;
+    max-width: 400px;
+  }
+  
+  .transactions-section {
+    margin-top: 40px;
+  }
+  
+  .budget-footer {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    text-align: center;
+  }
+  
