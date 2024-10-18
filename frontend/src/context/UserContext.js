@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Create the context
 export const UserContext = createContext();
@@ -7,6 +8,17 @@ export const UserProvider = ({ children }) => {
   const [jwt, setJwt] = useState(null); // Stores the JWT token
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Tracks the user's login state
   const [userDetails, setUserDetails] = useState(null); // Stores any user-specific info if needed
+  const [rememberMe, setRememberMe] = useState(false); // Tracks whether "Remember me" is checked
+  const navigate = useNavigate();
+
+  // Function to set the JWT token and rememberMe status
+  const setAuthToken = (token, remember) => {
+    setJwt(token);
+    setRememberMe(remember);
+    if (remember) {
+      localStorage.setItem('jwt', token); // Store in localStorage if Remember Me is checked
+    }
+  };
 
   // On first render (or page refresh), check if a token exists in localStorage and set the user as authenticated
   useEffect(() => {
@@ -14,13 +26,15 @@ export const UserProvider = ({ children }) => {
     if (storedJwt) {
       setJwt(storedJwt);
       setIsAuthenticated(true);
+    } else if (!rememberMe && jwt === null) {
+      // If no token and Remember Me was not checked, trigger logout
+      handleLogout();
     }
-  }, []); // Empty dependency array ensures this runs only once when the component mounts (on page load/refresh)
+  }, [jwt, rememberMe]);
 
-  // Login function
-  const handleLogin = async (username, password) => {
+  const handleLogin = async (username, password, rememberMe) => {
     try {
-      const response = await fetch('/api/users/login', {
+      const response = await fetch('http://localhost:8084/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,13 +44,11 @@ export const UserProvider = ({ children }) => {
 
       if (response.ok) {
         const data = await response.json();
-        const { token } = data; // Assuming the API returns a token
-
-        // Save the token to localStorage
-        localStorage.setItem('jwt', token);
-        setJwt(token);
+        const { jwtToken } = data;
+        debugger
+        // Use the setAuthToken function to set the token and Remember Me status
+        setAuthToken(jwtToken, rememberMe);
         setIsAuthenticated(true);
-
         alert('Login successful!');
       } else {
         alert('Invalid username or password.');
@@ -54,21 +66,24 @@ export const UserProvider = ({ children }) => {
     setJwt(null);
     setIsAuthenticated(false);
     setUserDetails(null); // Clear user details if you were storing them
-  };
 
-  // Function to check if user is authenticated
-  const checkAuth = () => !!jwt;
+    // Redirect the user to the homepage with an alert
+    alert("You've been logged out");
+    navigate("/");
+  };
 
   return (
     <UserContext.Provider
       value={{
         isAuthenticated,
+        setIsAuthenticated,
         jwt,
+        setJwt,
         handleLogin,
         handleLogout,
-        checkAuth,
         userDetails,
-        setUserDetails, // Allows you to set user details after login
+        setUserDetails,
+        setAuthToken, 
       }}
     >
       {children}

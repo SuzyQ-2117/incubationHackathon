@@ -22,14 +22,25 @@ public class UserService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     // CRUD operations and business logic
-    public UserDTO addUser(User user) {
+    public UserDTO registerUser(User user) {
+        // Check if username already exists
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new IllegalStateException("Username already taken");
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Save the new user to the database
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
     }
 
     public UserDTO getUserById(Long userId) {
         User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        return convertToDTO(user);
+    }
+
+    public UserDTO getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         return convertToDTO(user);
     }

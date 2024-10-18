@@ -1,80 +1,22 @@
-// src/components/LoginForm.jsx
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { UserContext } from "../context/UserContext"; // Assuming UserContext is set up
 
 const LoginForm = () => {
-  const { setAuthToken, setIsAuthenticated } = useContext(UserContext); // Access context for token and authentication state
+  const { handleLogin } = useContext(UserContext); // Access the login function from context
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  // const handleLogin = async (e) => {
-  //   e.preventDefault();
-  
-  //   try {
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json", // No need for Access-Control-Allow-Origin here
-  //       },
-  //     };
-  
-  //     const response = await axios.post(
-  //       "http://localhost:8084/users/login",
-  //       { username, password },
-  //       config
-  //     );
-  
-  //     if (response.status === 200) {
-  //       const { token } = response.data;
-  //       localStorage.setItem("jwtToken", token);
-  //       setAuthToken(token);
-  //       setIsAuthenticated(true);
-  //       navigate("/dashboard");
-  //     }
-  //   } catch (error) {
-  //     console.error("Login error:", error);
-  //     alert("Invalid login credentials. Please try again.");
-  //   }
-  // };
-  
-  //TRY THIS
-  const handleLogin = async (e) => {
-    e.preventDefault();
-  
-    try {
-      const response = await fetch('http://localhost:8084/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-        credentials: 'include', // To handle cookies or tokens properly
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('jwtToken', data.token); // Assuming the response contains a token
-        setAuthToken(data.token);
-        setIsAuthenticated(true);
-        navigate('/dashboard');
-      } else {
-        throw new Error('Login failed');
-      }
-    } catch (error) {
-      console.error('Login error:', error);
-      alert('Invalid login credentials. Please try again.');
-    }
+  const onSubmit = async (e) => {
+    e.preventDefault(); // Prevent form from reloading the page
+    await handleLogin(username, password, rememberMe); // Call the login function with form values
+    navigate("/dashboard"); // Redirect after login success (adjust the path as needed)
   };
-  
 
   return (
-    <form onSubmit={handleLogin}>
+    <form onSubmit={onSubmit}>
       <label>
         Username:
         <input

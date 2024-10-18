@@ -17,8 +17,8 @@ import RegistrationsPage from './pages/RegistrationPage';
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
+    <Router>
+      <UserProvider>
         <div className="app-layout">
           <Sidebar />
           <main className="content">
@@ -37,8 +37,8 @@ function App() {
             </Routes>
           </main>
         </div>
-      </Router>
-    </UserProvider>
+        </UserProvider>
+    </Router>
   );
 }
 

@@ -41,7 +41,7 @@ const UserRegistrationForm = () => {
     setPasswordError(""); // Clear any previous password error
 
     try {
-      const response = await axios.post("http://localhost:8088/users", formData);
+      const response = await axios.post("http://localhost:8084/users/register", formData, {withCredentials: true}); // Match your backend endpoint
       console.log("User registered successfully:", response.data);
       alert("User registered successfully!");
       setFormData({
@@ -54,13 +54,12 @@ const UserRegistrationForm = () => {
         contactNumber: "",
         username: "",
         password: "",
-        confirmPassword: "",
         identityConfirmed: false,
         marketingEmail: false,
         pushNotifications: false,
         marketingText: false,
       });
-      navigate("/login");
+      navigate("/users/login");
     } catch (error) {
       console.error("Error registering user:", error);
       alert("An error occurred while registering the user.");

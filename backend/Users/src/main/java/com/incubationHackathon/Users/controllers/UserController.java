@@ -14,12 +14,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -52,19 +52,6 @@ public class UserController {
         return ResponseEntity.ok("Service is up");
     }
 
-    // THIS WORKS BUT DOES NOT RETURN A JWT
-//    @PostMapping("/login")
-//    public ResponseEntity<?> login(@RequestBody AuthRequest loginRequest) {
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
-//        );
-//
-//        if (authentication.isAuthenticated()) {
-//            return ResponseEntity.ok("Login successful");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed");
-//        }
-//    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthRequest loginRequest) {
@@ -94,11 +81,19 @@ public class UserController {
 
 
 
-    // Add a new user
-    @PostMapping
-    public ResponseEntity<UserDTO> addUser(@RequestBody User user) {
-        UserDTO createdUser = userService.addUser(user);
-        return ResponseEntity.ok(createdUser);
+    // Register and login user
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody User user) {
+        try {
+            // Delegate all the logic to the service
+            UserDTO createdUser = userService.registerUser(user);
+    return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            // Handle the case where the username is already taken
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Registration successful but login failed.");
+        }
     }
 
     // Retrieve a user by ID
@@ -106,6 +101,28 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         UserDTO user = userService.getUserById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getUserFromJwt(@RequestHeader("Authorization") String token) {
+        try {
+            // Extract the JWT token by removing the "Bearer " prefix
+            String jwt = token.replace("Bearer ", "");
+
+            // Decode the JWT to get the username
+            String userId = jwtUtil.extractUsername(jwt);
+
+            // Find the user by username (or userId)
+            UserDTO user = userService.getUserById(Long.parseLong(userId));
+
+            if (user != null) {
+                return ResponseEntity.ok(user);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     // Update user details

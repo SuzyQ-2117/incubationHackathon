@@ -20,7 +20,7 @@ public class GatewaySecurityConfig {
         http
                 .csrf().disable()
                 .authorizeExchange()
-                .pathMatchers("/users/login", "/users/status").permitAll()  // Open login and status
+                .pathMatchers("/users/login", "/users/status", "/users/me", "/users/register").permitAll()  // Open login and status
                 .anyExchange().authenticated()  // Rest of the endpoints need authentication
                 .and()
                 .httpBasic().disable()

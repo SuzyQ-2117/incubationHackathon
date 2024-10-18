@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/transactions")  // Update path to differentiate microservice context
 public class TransactionController {

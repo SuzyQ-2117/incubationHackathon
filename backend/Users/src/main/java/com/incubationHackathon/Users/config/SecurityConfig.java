@@ -29,7 +29,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/login","/users/**", "/users/register", "/users/status", "/users", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow register endpoint without authentication
+                .requestMatchers("/users/**", "/users", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll() // Allow register endpoint without authentication
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().disable();

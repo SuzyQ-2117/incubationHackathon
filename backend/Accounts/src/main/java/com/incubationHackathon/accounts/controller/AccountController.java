@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {

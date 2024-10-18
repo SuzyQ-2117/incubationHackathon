@@ -12,6 +12,7 @@ const Sidebar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
+          <hr />
           {/* If logged in, show these options */}
           {isAuthenticated && (
             <>
@@ -30,14 +31,13 @@ const Sidebar = () => {
               <li>
                 <Link to="/accounts">Accounts</Link>
               </li>
+              <hr />
               <li>
                 <Link to="/admin">Account Admin</Link>
               </li>
             </>
           )}
-        </ul>
-        <hr />
-        <ul>
+          <>
           <li>
             {/* If logged in, show Log Out button; if not, show Log In & Register */}
             {isAuthenticated ? (
@@ -46,7 +46,7 @@ const Sidebar = () => {
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: '#007bff',
+                  color: 'black',
                   cursor: 'pointer',
                   padding: 0,
                 }}
@@ -57,6 +57,7 @@ const Sidebar = () => {
               <Link to="/users/login">Log In & Register</Link>
             )}
           </li>
+          </>
         </ul>
       </nav>
     </div>
