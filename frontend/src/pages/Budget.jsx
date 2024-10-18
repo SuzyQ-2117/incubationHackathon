@@ -47,8 +47,12 @@ const Budget = () => {
 
   return (
     <div className="budget-page">
+      <header className="app-header">
+        <h1>PennyPilot</h1>
+        <h2> Helping you fly higher with every penny!</h2>
+      </header>
       <header className="budget-header">
-        <h1>Your Budget Overview</h1>
+        <h3>Your Budget Overview</h3>
         <div className="budget-input">
           <label>Set your budget: £</label>
           <input

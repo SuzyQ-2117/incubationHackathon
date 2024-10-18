@@ -1,0 +1,38 @@
+[
+    {
+      "GoalName": "Holiday to Maldives",
+      "GoalAmount": 5000,
+      "CurrentBalance": 1500,
+      "SortCode": "12-34-56",
+      "AccountNumber": "12345678"
+    },
+    {
+      "GoalName": "New Car",
+      "GoalAmount": 12000,
+      "CurrentBalance": 8000,
+      "SortCode": "12-34-56",
+      "AccountNumber": "23456789"
+    },
+    {
+      "GoalName": "Wedding Fund",
+      "GoalAmount": 15000,
+      "CurrentBalance": 5000,
+      "SortCode": "12-34-56",
+      "AccountNumber": "34567890"
+    },
+    {
+      "GoalName": "Emergency Fund",
+      "GoalAmount": 10000,
+      "CurrentBalance": 7000,
+      "SortCode": "12-34-56",
+      "AccountNumber": "45678901"
+    },
+    {
+      "GoalName": "Home Renovation",
+      "GoalAmount": 25000,
+      "CurrentBalance": 10000,
+      "SortCode": "12-34-56",
+      "AccountNumber": "56789012"
+    }
+  ]
+  

@@ -20,16 +20,17 @@ const Sidebar = () => {
                 <Link to="/dashboard">Dashboard</Link>
               </li>
               <li>
-                <Link to="/transactions">Transactions</Link>
-              </li>
-              <li>
                 <Link to="/budget">Budget</Link>
               </li>
               <li>
                 <Link to="/goals">Goals</Link>
               </li>
+              <hr />
               <li>
                 <Link to="/accounts">Accounts</Link>
+              </li>
+              <li>
+                <Link to="/transactions">Transactions</Link>
               </li>
               <hr />
               <li>
